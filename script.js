@@ -1,8 +1,6 @@
 let colorInput;
 let inputHeight;
 let inputWidth;
-let first;
-let last;
 let pixelCanvas;
 
 colorInput = $("#colorPicker");
@@ -38,4 +36,18 @@ function makeGrid(row, column) {
 //Changes the background color of each cell, with the color chosen by the user.
 $("table").on("click", "td", function (event) {
   $(event.target).css("background", colorInput.val());
+});
+
+$("#exportButton").click(function () {
+  html2canvas(document.getElementById("pixel_canvas"), {
+    backgroundColor: "#ffffff",
+  }).then(function (canvas) {
+    var img = canvas.toDataURL("image/jpeg");
+    var link = document.createElement("a");
+    link.href = img;
+    link.download = "grid.jpg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
 });
